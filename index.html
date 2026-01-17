@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BSMT</title>
 
-  <!-- Favicon -->
+  
   <link rel="icon" type="image/png" href="image/logo1.png">
 
   <link rel="stylesheet" href="styles.css" />
@@ -37,7 +37,7 @@
       <nav class="nav" id="nav">
         <a href="#events">Etkinlikler</a>
         <a href="#team">Ekip</a>
-        <a class="btn btn-small" href="#contact">Üye Ol</a>
+        <a class="btn btn-small" href="#">Üye Ol</a>
       </nav>
     </div>
   </header>
@@ -69,13 +69,13 @@
       <div class="hero-card">
         <h3>Yaklaşan Etkinlik</h3>
         <div id="nextEvent" class="next-event">
-          <!-- JS dolduracak -->
+          
         </div>
       </div>
     </div>
   </main>
 
-  <!-- ABOUT -->
+  
   <section id="about" class="section section-soft">
     <div class="container about">
 
@@ -134,7 +134,7 @@
     </div>
   </section>
 
-  <!-- EVENTS -->
+  
   <section id="events" class="section">
     <div class="container">
       <div class="section-head">
@@ -142,12 +142,24 @@
       </div>
 
       <div id="eventsGrid" class="grid">
-        <!-- JS dolduracak -->
+        
       </div>
     </div>
   </section>
 
-  <!-- TEAM (SLIDER) -->
+  <section id="past-events" class="section section-soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>Geçmiş Etkinlikler</h2>
+    </div>
+
+    <div id="pastEventsGrid" class="grid">
+      
+    </div>
+  </div>
+</section>
+
+ 
   <section id="team" class="section section-soft">
     <div class="container">
       <div class="section-head">
@@ -227,57 +239,72 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  
   <section id="contact" class="section section-soft">
-    <div class="container">
-      <div class="section-head">
-        <h2>Üye Ol / İletişim</h2>
-      </div>
-
-      <form id="contactForm" class="form">
-        <div class="form-row">
-          <label>
-            Ad Soyad
-            <input class="input" name="name" required placeholder="" />
-          </label>
-          <label>
-            E-posta
-            <input class="input" name="email" type="email" required placeholder="" />
-          </label>
-        </div>
-
-        <div class="form-row">
-          <label>
-            Bölümünüz
-            <input class="input" name="interest" placeholder="" />
-          </label>
-          <label>
-            Sınıf
-            <select class="input" name="grade">
-              <option>Hazırlık</option>
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-            </select>
-          </label>
-        </div>
-
-        <label>
-          Mesaj
-          <textarea class="input" name="message" rows="4" placeholder=""></textarea>
-        </label>
-
-        <div class="form-actions">
-          <button class="btn" type="submit">Gönder</button>
-          <span id="formStatus" class="muted"></span>
-        </div>
-      </form>
-
-      <div class="social">
-        <a class="pill" href="https://www.instagram.com/saubsmt/" target="_blank" rel="noreferrer">Instagram</a>
-        <a class="pill" href="https://chat.whatsapp.com/Ltrsb86Mns03nwCVO3CJ9i" target="_blank" rel="noreferrer">WhatsApp</a>
-        <a class="pill" href="https://www.linkedin.com/in/bsmt/" target="_blank" rel="noreferrer">LinkedIn</a>
-      </div>
+  <div class="container">
+    <div class="section-head">
+      <h2>Fikirlerinizi bizimle paylaşabilirsiniz</h2>
     </div>
-  </section>
+
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <form class="form"
+          action="https://formsubmit.co/bsmt@sakarya.edu.tr"
+          method="POST"
+          target="hidden_iframe"
+          onsubmit="formSent();">
+
+      <input type="hidden" name="_subject" value="BSMT - Yeni Mesaj">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="form-row">
+        <label>
+          Ad Soyad
+          <input class="input" name="Ad Soyad" required>
+        </label>
+        <label>
+          E-posta
+          <input class="input" name="E-posta" type="email" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label>
+          Bölümünüz
+          <input class="input" name="Bölüm">
+        </label>
+        <label>
+          Sınıf
+          <select class="input" name="Sınıf">
+            <option>Hazırlık</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Mesaj
+        <textarea class="input" name="Mesaj" rows="4"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Gönder</button>
+        <span id="formStatus" class="muted"></span>
+      </div>
+    </form>
+
+    <div class="social">
+      <a class="pill" href="https://www.instagram.com/saubsmt/" target="_blank" rel="noreferrer">Instagram</a>
+      <a class="pill" href="https://chat.whatsapp.com/Ltrsb86Mns03nwCVO3CJ9i" target="_blank" rel="noreferrer">WhatsApp</a>
+      <a class="pill" href="https://www.linkedin.com/in/bsmt/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
 
   <footer class="footer">
     <div class="container footer-inner">

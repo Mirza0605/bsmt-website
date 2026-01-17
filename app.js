@@ -1,13 +1,13 @@
 const events = [
   {
     title: "Tanışma Toplantısı",
-    date: "2026-01-22",
+    date: "2026-01-15",
     time: "18:00",
     place: "Mühendislik Fakültesi - Amfi 2",
     type: "Toplantı",
     desc: "Yeni üyelerle tanışıyoruz, dönem planını konuşuyoruz.",
     link: "#",
-    image: "image/logo1.png"
+    image: "image/100.jpeg"
   },
   {
     title: "React ile Web Atölyesi",
@@ -17,7 +17,7 @@ const events = [
     type: "Teknik Gezi",
     desc: "Component mantığı + mini proje.",
     link: "#",
-    image: "image/logo1.png"
+    image: "image/100.jpeg"
   },
   {
     title: "Kariyer Söyleşisi",
@@ -27,36 +27,44 @@ const events = [
     type: "Söyleşi",
     desc: "Sektörden konuk ile yol haritası ve Q&A.",
     link: "#",
-    image: "image/logo1.png"
+    image: "image/event-3.jpg"
   }
 ];
 
 const $ = (s) => document.querySelector(s);
 
+
 const eventsGrid = $("#eventsGrid");
+const pastEventsGrid = $("#pastEventsGrid");
 const nextEventBox = $("#nextEvent");
 const statEvents = $("#statEvents");
+
 
 function formatTR(dateStr){
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("tr-TR", { day:"2-digit", month:"long", year:"numeric" });
 }
 
-function renderEvents(list){
-  if (!eventsGrid) return;
+function startOfTodayTs(){
+  const today = new Date();
+  return new Date(today.toDateString()).getTime(); 
+}
 
-  const sorted = [...list].sort((a, b) => {
+function renderEventCards(list, target){
+  if (!target) return;
+
+  if (!list.length){
+    target.innerHTML = `<p class="muted">Etkinlik bulunamadı.</p>`;
+    return;
+  }
+
+  const sorted = [...list].sort((a,b) => {
     const ta = new Date(a.date + "T00:00:00").getTime();
     const tb = new Date(b.date + "T00:00:00").getTime();
     return ta - tb;
   });
 
-  if (!sorted.length){
-    eventsGrid.innerHTML = `<p class="muted">Şu an etkinlik yok.</p>`;
-    return;
-  }
-
-  eventsGrid.innerHTML = sorted.map(e => `
+  target.innerHTML = sorted.map(e => `
     <article class="card event-card">
       ${e.image ? `<img class="event-photo" src="${e.image}" alt="${e.title}">` : ""}
       <span class="badge">${e.type}</span>
@@ -71,28 +79,44 @@ function renderEvents(list){
   `).join("");
 }
 
-function renderNextEvent(){
+function splitEvents(){
+  const todayTs = startOfTodayTs();
+  const upcoming = [];
+  const past = [];
+
+  events.forEach(e => {
+    const ts = new Date(e.date + "T00:00:00").getTime();
+    if (ts >= todayTs) upcoming.push(e);
+    else past.push(e);
+  });
+
+  past.sort((a,b) => {
+    const ta = new Date(a.date + "T00:00:00").getTime();
+    const tb = new Date(b.date + "T00:00:00").getTime();
+    return tb - ta;
+  });
+
+  return { upcoming, past };
+}
+
+function renderNextEvent(upcoming){
   if (!nextEventBox) return;
 
-  const today = new Date();
-  const startOfToday = new Date(today.toDateString()).getTime();
-
-  const upcoming = events
-    .map(e => ({...e, ts: new Date(e.date + "T00:00:00").getTime()}))
-    .filter(e => e.ts >= startOfToday)
-    .sort((a,b) => a.ts - b.ts)[0];
-
-  if(!upcoming){
+  if(!upcoming.length){
     nextEventBox.innerHTML = `<p class="muted">Şu an yaklaşan etkinlik yok. Yakında duyuracağız.</p>`;
     return;
   }
 
+  const next = [...upcoming]
+    .map(e => ({...e, ts: new Date(e.date + "T00:00:00").getTime()}))
+    .sort((a,b) => a.ts - b.ts)[0];
+
   nextEventBox.innerHTML = `
-    <div class="badge">📌 ${upcoming.type}</div>
-    <h4 style="margin:0">${upcoming.title}</h4>
-    <div class="muted">📅 ${formatTR(upcoming.date)} • ${upcoming.time}</div>
-    <div class="muted">📍 ${upcoming.place}</div>
-    ${upcoming.link ? `<a class="btn btn-small" href="${upcoming.link}" target="_blank" rel="noreferrer">Kayıt Ol</a>` : ""}
+    <div class="badge">📌 ${next.type}</div>
+    <h4 style="margin:0">${next.title}</h4>
+    <div class="muted">📅 ${formatTR(next.date)} • ${next.time}</div>
+    <div class="muted">📍 ${next.place}</div>
+    ${next.link ? `<a class="btn btn-small" href="${next.link}" target="_blank" rel="noreferrer">Kayıt Ol</a>` : ""}
   `;
 }
 
@@ -108,9 +132,9 @@ function setupMenu(){
 }
 
 function setupTeamSlider(){
-  const track = document.querySelector("#teamTrack");
-  const prev = document.querySelector("#teamPrev");
-  const next = document.querySelector("#teamNext");
+  const track = $("#teamTrack");
+  const prev = $("#teamPrev");
+  const next = $("#teamNext");
   if(!track || !prev || !next) return;
 
   const scrollAmount = () => {
@@ -127,13 +151,26 @@ function setupTeamSlider(){
   });
 }
 
+function formSent(){
+  const status = document.getElementById("formStatus");
+  if(status){
+    status.textContent = "Mesajınız gönderildi ";
+    setTimeout(() => status.textContent = "", 4000);
+  }
+}
+
+
 function init(){
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   if (statEvents) statEvents.textContent = String(events.length);
 
-  renderEvents(events);
-  renderNextEvent();
+  const { upcoming, past } = splitEvents();
+
+  renderEventCards(upcoming, eventsGrid);
+  renderEventCards(past, pastEventsGrid);
+  renderNextEvent(upcoming);
+
   setupMenu();
   setupTeamSlider();
 }
