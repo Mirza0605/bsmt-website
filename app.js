@@ -6,16 +6,18 @@ const events = [
     place: "Mühendislik Fakültesi - Amfi 2",
     type: "Toplantı",
     desc: "Yeni üyelerle tanışıyoruz, dönem planını konuşuyoruz.",
-    link: "#"
+    link: "#",
+    image: "image/logo1.png"
   },
   {
     title: "React ile Web Atölyesi",
     date: "2026-01-28",
     time: "17:30",
     place: "Lab 3",
-    type: "Atölye", // <- İstersen "Teknik Gezi" yapabilirsin
+    type: "Teknik Gezi",
     desc: "Component mantığı + mini proje.",
-    link: "#"
+    link: "#",
+    image: "image/logo1.png"
   },
   {
     title: "Kariyer Söyleşisi",
@@ -24,7 +26,8 @@ const events = [
     place: "Konferans Salonu",
     type: "Söyleşi",
     desc: "Sektörden konuk ile yol haritası ve Q&A.",
-    link: "#"
+    link: "#",
+    image: "image/logo1.png"
   }
 ];
 
@@ -54,7 +57,8 @@ function renderEvents(list){
   }
 
   eventsGrid.innerHTML = sorted.map(e => `
-    <article class="card">
+    <article class="card event-card">
+      ${e.image ? `<img class="event-photo" src="${e.image}" alt="${e.title}">` : ""}
       <span class="badge">${e.type}</span>
       <h3>${e.title}</h3>
       <p>${e.desc}</p>
