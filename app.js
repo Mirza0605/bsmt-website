@@ -16,7 +16,7 @@ const events = [
     type: "Teknik Gezi",
     desc: "",
     link: "#",
-    image: "image/.jpeg" 
+    image: "image/95.jpeg" 
   },
   {
     title: "Mezunlarla İş Bulma Süreci",
@@ -44,6 +44,15 @@ const events = [
     type: "Quiz Night",
     desc: "Eğlence, kahkaha ve yarışma dolu bir gece için tek ihtiyacımız var: SEN! Aramıza bekleriz.",
     image: "image/70.jpeg"
+  },
+  {
+    title: "Aris Workshop",
+    date: "2026-03-04",
+    time: "",
+    place: "Bilgisayar ve Bilişim Bilimleri Fakültesi",
+    type: "Workshop",
+    desc: "",
+    image: "image/60.jpeg"
   }
 ];
 
